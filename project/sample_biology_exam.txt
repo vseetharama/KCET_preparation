@@ -1,0 +1,37 @@
+BIOLOGY EXAM SAMPLE QUESTIONS
+
+Chapter 1: Cell Structure and Function
+
+Question Set 1: Basic Concepts
+1. The Plasma Membrane is a phospholipid bilayer that controls what enters and exits the cell.
+2. The Nucleus is the membrane-bound organelle that contains the cell's DNA and controls cell activities.
+3. Mitochondria are the powerhouses of the cell, producing ATP through aerobic respiration.
+4. Ribosomes are sites of Protein Synthesis where mRNA is translated into proteins.
+5. The Endoplasmic Reticulum is a network of membranes involved in protein and lipid synthesis.
+
+Chapter 2: Photosynthesis
+
+Question Set 2: Photosynthesis Process
+1. Photosynthesis is the process by which plants convert solar energy into chemical energy stored in glucose.
+2. The Light Reactions occur in the Thylakoid Membranes of the Chloroplast and require sunlight.
+3. The Calvin Cycle occurs in the Stroma of the Chloroplast and produces glucose without requiring light.
+4. Chlorophyll is the pigment that absorbs light energy during photosynthesis.
+5. Photosynthesis equation: 6CO2 + 6H2O + light energy → C6H12O6 + 6O2
+
+Chapter 3: Cellular Respiration
+
+Question Set 3: ATP Production
+1. Cellular Respiration is the process by which cells break down glucose to release energy in the form of ATP.
+2. Aerobic Respiration requires Oxygen and produces approximately 36 ATP molecules per glucose molecule.
+3. Anaerobic Respiration does not require oxygen and produces only 2 ATP molecules per glucose.
+4. The Krebs Cycle, also called the Citric Acid Cycle, is the second stage of aerobic respiration.
+5. The Electron Transport Chain is located in the Inner Mitochondrial Membrane and produces the most ATP.
+
+Chapter 4: DNA and Protein Synthesis
+
+Question Set 4: Genetic Information
+1. DNA (Deoxyribonucleic Acid) is the molecule that carries genetic instructions for all living organisms.
+2. Transcription is the process where DNA is copied into mRNA in the nucleus.
+3. Translation is the process where mRNA is decoded to produce proteins at the ribosome.
+4. Codons are sequences of three nucleotides on mRNA that code for specific amino acids.
+5. The Genetic Code is nearly universal across all organisms, supporting the theory of evolution.

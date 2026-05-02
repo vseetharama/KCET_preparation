@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ExamForge AI — Connection Test</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Segoe UI', system-ui, sans-serif; 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      max-width: 500px;
+      width: 100%;
+      padding: 40px;
+    }
+    h1 { color: #1a1a2e; margin-bottom: 30px; text-align: center; font-size: 24px; }
+    .test-group { margin-bottom: 20px; }
+    .test-item { 
+      display: flex; 
+      align-items: center; 
+      padding: 12px 16px; 
+      background: #f5f5f5; 
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border-left: 4px solid #ddd;
+    }
+    .test-item.loading { border-left-color: #ffa500; }
+    .test-item.success { border-left-color: #22c55e; background: #f0fdf4; }
+    .test-item.error { border-left-color: #ef4444; background: #fef2f2; }
+    .test-icon { 
+      font-size: 20px; 
+      margin-right: 12px; 
+      min-width: 20px;
+      text-align: center;
+    }
+    .test-content { flex: 1; }
+    .test-label { font-weight: 600; color: #1a1a2e; }
+    .test-desc { font-size: 12px; color: #666; margin-top: 2px; }
+    .test-status { font-size: 12px; font-weight: 600; }
+    .button-group { 
+      display: flex; 
+      gap: 10px; 
+      margin-top: 30px;
+      justify-content: center;
+    }
+    button { 
+      padding: 12px 24px; 
+      border: none; 
+      border-radius: 8px; 
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-primary { 
+      background: #667eea; 
+      color: white;
+    }
+    .btn-primary:hover { 
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102,126,234,0.3);
+    }
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #1a1a2e;
+    }
+    .btn-secondary:hover {
+      background: #d1d5db;
+    }
+    .result-box {
+      margin-top: 20px;
+      padding: 16px;
+      background: #f9fafb;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      display: none;
+    }
+    .result-box.show { display: block; }
+    .result-title { font-weight: 600; color: #1a1a2e; margin-bottom: 8px; }
+    .result-text { font-size: 12px; color: #666; font-family: 'Courier New', monospace; word-break: break-all; }
+    .spinner {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border: 2px solid #ffa500;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔗 ExamForge Connection Test</h1>
+    
+    <div class="test-group">
+      <div class="test-item" id="backendTest">
+        <span class="test-icon">⏳</span>
+        <div class="test-content">
+          <div class="test-label">Backend Health Check</div>
+          <div class="test-desc">Testing connection to http://localhost:8000</div>
+        </div>
+      </div>
+      
+      <div class="test-item" id="uploadTest">
+        <span class="test-icon">⏳</span>
+        <div class="test-content">
+          <div class="test-label">Upload Endpoint</div>
+          <div class="test-desc">Verifying /upload endpoint is accessible</div>
+        </div>
+      </div>
+      
+      <div class="test-item" id="generateTest">
+        <span class="test-icon">⏳</span>
+        <div class="test-content">
+          <div class="test-label">Generate Endpoint</div>
+          <div class="test-desc">Verifying /generate endpoint is accessible</div>
+        </div>
+      </div>
+      
+      <div class="test-item" id="analyzeTest">
+        <span class="test-icon">⏳</span>
+        <div class="test-content">
+          <div class="test-label">Analyze Endpoint</div>
+          <div class="test-desc">Verifying /analyze endpoint is accessible</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-box" id="resultBox">
+      <div class="result-title">Connection Status</div>
+      <div class="result-text" id="resultText"></div>
+    </div>
+
+    <div class="button-group">
+      <button class="btn-primary" onclick="runTests()">Run Tests</button>
+      <button class="btn-secondary" onclick="window.location.href='index.html'">Go to Generator</button>
+    </div>
+  </div>
+
+  <script>
+    function updateTest(id, status, icon, desc) {
+      const el = document.getElementById(id);
+      el.classList.remove('loading', 'success', 'error');
+      el.classList.add(status);
+      el.querySelector('.test-icon').textContent = icon;
+      if (desc) el.querySelector('.test-desc').textContent = desc;
+    }
+
+    async function runTests() {
+      document.getElementById('resultBox').classList.remove('show');
+      updateTest('backendTest', 'loading', '⏳', 'Testing...');
+      updateTest('uploadTest', 'loading', '⏳', 'Testing...');
+      updateTest('generateTest', 'loading', '⏳', 'Testing...');
+      updateTest('analyzeTest', 'loading', '⏳', 'Testing...');
+
+      const baseURL = 'http://localhost:8000';
+      let results = [];
+
+      try {
+        const healthRes = await fetch(`${baseURL}/health`, { mode: 'cors' });
+        if (healthRes.ok) {
+          const data = await healthRes.json();
+          updateTest('backendTest', 'success', '✅', `Connected (${data.chunks_indexed} chunks indexed)`);
+          results.push(`✅ Backend Health: OK - ${JSON.stringify(data)}`);
+        } else {
+          updateTest('backendTest', 'error', '❌', `HTTP ${healthRes.status}`);
+          results.push(`❌ Backend Health: HTTP ${healthRes.status}`);
+        }
+      } catch (e) {
+        updateTest('backendTest', 'error', '❌', e.message);
+        results.push(`❌ Backend Health: ${e.message}`);
+      }
+
+      try {
+        const uploadRes = await fetch(`${baseURL}/upload`, { 
+          method: 'OPTIONS',
+          mode: 'cors'
+        });
+        updateTest('uploadTest', 'success', '✅', 'Endpoint ready');
+        results.push(`✅ Upload Endpoint: OK (CORS enabled)`);
+      } catch (e) {
+        updateTest('uploadTest', 'error', '❌', e.message);
+        results.push(`❌ Upload Endpoint: ${e.message}`);
+      }
+
+      try {
+        const generateRes = await fetch(`${baseURL}/generate`, {
+          method: 'OPTIONS',
+          mode: 'cors'
+        });
+        updateTest('generateTest', 'success', '✅', 'Endpoint ready');
+        results.push(`✅ Generate Endpoint: OK (CORS enabled)`);
+      } catch (e) {
+        updateTest('generateTest', 'error', '❌', e.message);
+        results.push(`❌ Generate Endpoint: ${e.message}`);
+      }
+
+      try {
+        const analyzeRes = await fetch(`${baseURL}/analyze`, {
+          method: 'OPTIONS',
+          mode: 'cors'
+        });
+        updateTest('analyzeTest', 'success', '✅', 'Endpoint ready');
+        results.push(`✅ Analyze Endpoint: OK (CORS enabled)`);
+      } catch (e) {
+        updateTest('analyzeTest', 'error', '❌', e.message);
+        results.push(`❌ Analyze Endpoint: ${e.message}`);
+      }
+
+      document.getElementById('resultBox').classList.add('show');
+      document.getElementById('resultText').textContent = results.join('\n');
+    }
+
+    // Auto-run tests on load
+    window.addEventListener('load', runTests);
+  </script>
+</body>
+</html>
